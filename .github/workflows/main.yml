@@ -15,4 +15,4 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Compile the TypeScript
-        run: yarn ts-node ./src/lib.ts
+        run: yarn install && yarn ts-node ./src/lib.ts
