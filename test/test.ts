@@ -1,23 +1,27 @@
+import path from "path";
+import fs from "fs";
+
 import test from "ava";
 
-const fn = () => "foo";
+import { ZipHandler } from "../src/ZipHandler";
 
-test("fn() returns foo", (t) => {
-  t.is(fn(), "foo");
-});
-
-test("detected files", (t) => {
+test("detected files", async (t) => {
   // APKG is essentially just a ZIP file
   const expected = [
-    "collection.anki2", // This the sqlite db for older versions?
-    "collection.anki21", // This the actual db with all tables and data
     "0", // PNG image
     "1", // PNG image
     "2", // PNG image
     "3", // PNG image
     "4", // PNG image
+    "collection.anki2", // This the sqlite db for older versions?
+    "collection.anki21", // This the actual db with all tables and data
     "media", // What is this??  is it related to images and scheduling???
   ];
-  console.log("need to handle these");
-  t.fail("to be implemented");
+  // TODO: load the data in setup, should not really change
+  const filePath = path.join(__dirname, "artifacts/HTML TEST.apkg");
+  const data = fs.readFileSync(filePath);
+  const zip = new ZipHandler();
+  await zip.build(data);
+  const actual = zip.fileNames;
+  t.deepEqual(expected, actual);
 });
