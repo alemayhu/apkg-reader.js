@@ -12,5 +12,15 @@
   "main": "index.js",
   "repository": "https://github.com/alemayhu/apkg-reader.js.git",
   "author": "Alexander Alemayhu <alexander@alemayhu.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alemayhu/apkg-reader.js/issues",
+    "email": "alexander@alemayhu.com"
+  },
+  "keywords": [
+    "anki",
+    "apkg",
+    "apkg.js",
+    "read apkg"
+  ]
 }
