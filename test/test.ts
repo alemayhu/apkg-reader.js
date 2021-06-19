@@ -52,3 +52,10 @@ test("detected files", async (t) => {
 test("reading sqlite files", async (t) => {
   t.deepEqual(15, t.context.db.notes().length);
 });
+
+test("get deck name", async (t) => {
+  const expected = "Default";
+  const deck = t.context.db.decks()[0];
+
+  t.deepEqual(expected, deck.name);
+});
