@@ -3,16 +3,34 @@ import fs from "fs";
 
 import anyTest, { TestInterface } from "ava";
 
+import SQLHandler from "../src/SQLHandler";
 import { ZipHandler } from "../src/ZipHandler";
 
-const test = anyTest as TestInterface<{ zip: ZipHandler }>;
+// TODO: add the db stuff to the interface
+const test = anyTest as TestInterface<{ zip: ZipHandler; db: SQLHandler }>;
 
 test.before(async (t) => {
-  const filePath = path.join(__dirname, "artifacts/HTML TEST.apkg");
-  const data = fs.readFileSync(filePath);
-  const zip = new ZipHandler();
-  await zip.build(data);
-  t.context = { zip: zip };
+  const setupZIP = async () => {
+    const filePath = path.join(__dirname, "artifacts/HTML TEST.apkg");
+    const data = fs.readFileSync(filePath);
+    const zip = new ZipHandler();
+    await zip.build(data);
+    return zip;
+  };
+
+  const setupDB = async (zip: ZipHandler) => {
+    const collectionFilename = "collection.anki21";
+    const collection = zip.files.find((f) => f.name === collectionFilename);
+    const contents = collection!.contents;
+    const db = new SQLHandler();
+    await db.load(contents);
+    return db;
+  };
+
+  const zip = await setupZIP();
+  const db = await setupDB(zip);
+
+  t.context = { zip: zip, db: db };
 });
 
 test("detected files", async (t) => {
@@ -29,4 +47,8 @@ test("detected files", async (t) => {
   ];
   const actual = t.context.zip.fileNames;
   t.deepEqual(expected, actual);
+});
+
+test("reading sqlite files", async (t) => {
+  t.deepEqual(15, t.context.db.notes().length);
 });
