@@ -5,8 +5,8 @@ import anyTest, { TestInterface } from "ava";
 
 import SQLHandler from "../src/SQLHandler";
 import { ZipHandler } from "../src/ZipHandler";
+import { getCommentRange } from "typescript";
 
-// TODO: add the db stuff to the interface
 const test = anyTest as TestInterface<{ zip: ZipHandler; db: SQLHandler }>;
 
 test.before(async (t) => {
@@ -58,4 +58,20 @@ test("get deck name", async (t) => {
   const deck = t.context.db.decks()[0];
 
   t.deepEqual(expected, deck.name);
+});
+
+/**
+ * The way we get to the deck id is via cards.
+ * From the notes we can find the correct cards
+ * then access the deck id (did).
+ */
+test("get notes grouped by deck", async (t) => {
+  // &#x1F9E6; HTML test
+  const grouped = t.context.db.group();
+
+  const expected = "&#x1F9E6; HTML test";
+  // grouped && console.log(grouped?.notes[0].front);
+  t.deepEqual(expected, grouped[1].name);
+  /* @ts-ignore */
+  t.truthy(grouped[1].notes[0]);
 });
