@@ -1,10 +1,12 @@
 import path from "path";
 import fs from "fs";
 
-import {beforeAll, test, expect} from "vitest";
+import {beforeAll, expect, test} from "vitest";
 
-import SQLHandler from "../src/SQLHandler";
-import { ZipHandler } from "../src/ZipHandler";
+import SQLHandler from "../SQLHandler";
+import {ZipHandler} from "../ZipHandler";
+import {getInputFileAsZipHandler} from "./helpers/getInputFileAsZipHandler";
+import {createDatabaseFrom} from "./helpers/createDatabaseFrom";
 
 let zip: ZipHandler;
 let db: SQLHandler;
@@ -57,23 +59,6 @@ test("get deck name", async (t) => {
 
   expect(expected).toStrictEqual(deck.name);
 });
-
-async function getInputFileAsZipHandler(apkg: string) {
-  const filePath = path.join(__dirname, `artifacts/${apkg}`);
-  const data = fs.readFileSync(filePath);
-  const zip = new ZipHandler();
-  await zip.build(data);
-  return zip;
-}
-
-async function createDatabaseFrom(zipHandler: ZipHandler) {
-  const collectionFilename = "collection.anki21";
-  const collection = zip.files.find((f) => f.name === collectionFilename);
-  const contents = collection!.contents;
-  db = new SQLHandler();
-  await db.load(contents);
-  return db;
-}
 
 test('get non-default deck name', async () => {
   const zipHandler = await getInputFileAsZipHandler("Capitals.apkg");
