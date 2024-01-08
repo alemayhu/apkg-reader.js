@@ -58,20 +58,4 @@ export default class SQLHandler {
     }
     return decks;
   }
-
-  group(notes?: Note[], decks?: Deck[]): Deck[] {
-    const _notes = notes || this.notes();
-    const _decks = decks || this.decks();
-
-    for (const n of _notes) {
-      /* @ts-ignore */
-      const deckId = this.db!.exec(deckIdFromNoteId(n.id))[0].values[0][0];
-      const deck = _decks.find((d) => d.id === deckId);
-      if (deck) {
-        deck.notes ||= [];
-        deck.notes.push(n);
-      }
-    }
-    return _decks;
-  }
 }

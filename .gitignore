@@ -23,7 +23,7 @@ lib-cov
 coverage
 *.lcov
 
-# nyc test coverage
+# nyc libTest coverage
 .nyc_output
 
 # Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
@@ -71,7 +71,7 @@ web_modules/
 
 # dotenv environment variables file
 .env
-.env.test
+.env.libTest
 .env.production
 
 # parcel-bundler cache (https://parceljs.org/)
@@ -108,7 +108,7 @@ dist
 .tern-port
 
 # Stores VSCode versions used for testing VSCode extensions
-.vscode-test
+.vscode-libTest
 
 # yarn v2
 .yarn/cache
