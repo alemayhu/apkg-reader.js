@@ -65,3 +65,25 @@ test('get non-default deck name', async () => {
   const database = await createDatabaseFrom(zipHandler);
   expect(database.decks()[0].name).toEqual('Capitals');
 })
+
+
+/**
+ * The way we get to the deck id is via cards.
+ * From the notes we can find the correct cards
+ * then access the deck id (did).
+ */
+test("get notes grouped by deck", async () => {
+  const deck = db.decks()[0]
+  const notes = db.notes();
+  // const group = db.group([deck], notes);
+
+  const expected = "&#x1F9E6; HTML test";
+  // grouped && console.log(grouped?.notes[0].front);
+  expect(expected).toStrictEqual(deck.name);
+
+  if (notes) {
+    expect(notes[0]).toBeTruthy();
+  } else {
+    throw new Error('No notes found for grouped test');
+  }
+});
