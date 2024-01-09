@@ -17,4 +17,4 @@ jobs:
       - name: Compile the TypeScript
         run: yarn install && yarn ts-node ./src/lib.ts
       - name: Run the tests
-        run: yarn ava
+        run: yarn run test
