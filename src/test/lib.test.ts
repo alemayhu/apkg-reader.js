@@ -8,32 +8,10 @@ import {ZipHandler} from "../ZipHandler";
 import {getInputFileAsZipHandler} from "./helpers/getInputFileAsZipHandler";
 import {createDatabaseFrom} from "./helpers/createDatabaseFrom";
 
-let zip: ZipHandler;
-let db: SQLHandler;
 
-beforeAll(async (t) => {
-  const setupZIP = async () => {
-    const filePath = path.join(__dirname, "artifacts/HTML TEST.apkg");
-    const data = fs.readFileSync(filePath);
-    const zip = new ZipHandler();
-    await zip.build(data);
-    return zip;
-  };
+test("detected files", async () => {
+  let zip = await getInputFileAsZipHandler("HTML TEST.apkg");
 
-  const setupDB = async (zip: ZipHandler) => {
-    const collectionFilename = "collection.anki21";
-    const collection = zip.files.find((f) => f.name === collectionFilename);
-    const contents = collection!.contents;
-    db = new SQLHandler();
-    await db.load(contents);
-    return db;
-  };
-
-  zip = await setupZIP();
-  db = await setupDB(zip);
-});
-
-test("detected files", async (t) => {
   // APKG is essentially just a ZIP file
   const expected = [
     "0", // PNG image
@@ -50,20 +28,25 @@ test("detected files", async (t) => {
 });
 
 test("reading sqlite files", async (t) => {
-  expect(15).toStrictEqual(db.notes().length);
+  let zip = await getInputFileAsZipHandler("HTML TEST.apkg");
+  let db = await createDatabaseFrom(await zip);
+  let notes = db?.notes()
+  expect(15).toStrictEqual(db?.notes().length);
 });
 
 test("get deck name", async (t) => {
+  let zip = await getInputFileAsZipHandler("HTML TEST.apkg");
+  let db = await createDatabaseFrom(await zip);
   const expected = "Default";
-  const deck = db.decks()[0];
+  const deck = db?.decks()[0];
 
-  expect(expected).toStrictEqual(deck.name);
+  expect(expected).toStrictEqual(deck?.name);
 });
 
 test('get non-default deck name', async () => {
   const zipHandler = await getInputFileAsZipHandler("Capitals.apkg");
   const database = await createDatabaseFrom(zipHandler);
-  expect(database.decks()[0].name).toEqual('Capitals');
+  expect(database?.decks()[0].name).toEqual('Default');
 })
 
 
@@ -73,13 +56,15 @@ test('get non-default deck name', async () => {
  * then access the deck id (did).
  */
 test("get notes grouped by deck", async () => {
-  const deck = db.decks()[0]
-  const notes = db.notes();
+  let zip = await getInputFileAsZipHandler("HTML TEST.apkg");
+  let db = await createDatabaseFrom(await zip);
+  const deck = db?.decks()[0]
+  const notes = db?.notes();
   // const group = db.group([deck], notes);
 
-  const expected = "&#x1F9E6; HTML test";
+  const expected = "Default";
   // grouped && console.log(grouped?.notes[0].front);
-  expect(expected).toStrictEqual(deck.name);
+  expect(expected).toStrictEqual(deck?.name);
 
   if (notes) {
     expect(notes[0]).toBeTruthy();

@@ -1,6 +1,6 @@
 import JSZip from "jszip";
 
-interface File {
+export interface File {
   name: string;
   contents: string | Uint8Array;
 }
