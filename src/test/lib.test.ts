@@ -32,6 +32,7 @@ test("detected files", async () => {
   ];
   const actual = zip.fileNames;
   expect(expected).toStrictEqual(actual);
+  expect(expected).toStrictEqual(zip.getFileNames());
 });
 
 test("reading sqlite files", async (t) => {
