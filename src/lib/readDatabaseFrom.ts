@@ -1,4 +1,4 @@
-import {ZipHandler} from "../ZipHandler";
+import {ZipHandler} from "./zip/ZipHandler";
 import SQLHandler from "../SQLHandler";
 import {getVersion} from "./versions/getVersion";
 import {isLatestVersion} from "./versions/isLatestVersion";

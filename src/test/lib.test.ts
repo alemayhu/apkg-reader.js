@@ -4,7 +4,7 @@ import fs from "fs";
 import {beforeAll, expect, test} from "vitest";
 
 import SQLHandler from "../SQLHandler";
-import {ZipHandler} from "../ZipHandler";
+import {ZipHandler} from "../lib/zip/ZipHandler";
 import {getInputFileAsZipHandler} from "./helpers/getInputFileAsZipHandler";
 import {readDatabaseFrom} from "../lib/readDatabaseFrom";
 
