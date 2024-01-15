@@ -12,11 +12,9 @@ class ZipHandler {
   constructor() {
     this.fileNames = [];
     this.files = [];
-    // TODO: setup the zip data in the constructor here
   }
 
-  // TODO: rename to .read
-  async build(zipData: Buffer) {
+  async extractFilesInPlace(zipData: Buffer) {
     const loadedZip = await JSZip.loadAsync(zipData);
     this.fileNames = Object.keys(loadedZip.files);
     this.fileNames = this.fileNames.filter((f) => !f.endsWith("/"));
@@ -41,4 +39,4 @@ class ZipHandler {
   }
 }
 
-export { ZipHandler, File };
+export { ZipHandler };
