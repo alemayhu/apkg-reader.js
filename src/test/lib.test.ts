@@ -3,8 +3,8 @@ import fs from "fs";
 
 import {beforeAll, expect, test} from "vitest";
 
-import SQLHandler from "../SQLHandler";
-import {ZipHandler} from "../lib/zip/ZipHandler";
+import SQLHandler from "../lib/handlers/SQLHandler";
+import {ZipHandler} from "../lib/handlers/ZipHandler";
 import {getInputFileAsZipHandler} from "./helpers/getInputFileAsZipHandler";
 import {readDatabaseFrom} from "../lib/readDatabaseFrom";
 

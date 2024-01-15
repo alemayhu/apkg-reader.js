@@ -1,9 +1,9 @@
-import {ZipHandler} from "./zip/ZipHandler";
-import SQLHandler from "../SQLHandler";
+import {ZipHandler} from "./handlers/ZipHandler";
+import SQLHandler from "./handlers/SQLHandler";
 import {getVersion} from "./versions/getVersion";
 import {isLatestVersion} from "./versions/isLatestVersion";
 import {latestVersion, modernVersion, oldVersion} from "./versions/constants";
-import {getDecompressed} from "./getDecompressed";
+import {getDecompressedZSTD} from "./handlers/getDecompressedZSTD";
 
 
 export async function readDatabaseFrom(zip: ZipHandler) {
@@ -14,7 +14,7 @@ export async function readDatabaseFrom(zip: ZipHandler) {
     }
 
     const contents =
-        isLatestVersion(collection.name) ? getDecompressed(collection.contents as Uint8Array) : collection.contents;
+        isLatestVersion(collection.name) ? getDecompressedZSTD(collection.contents as Uint8Array) : collection.contents;
     const db = new SQLHandler();
     await db.load(contents);
     return db;
