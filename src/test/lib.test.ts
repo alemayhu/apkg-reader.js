@@ -5,6 +5,7 @@ import {expect, test} from "vitest";
 
 import {ZipHandler} from "../lib/handlers/ZipHandler";
 import {readDatabaseFrom} from "../lib/readDatabaseFrom";
+import {MediaHandler} from "../lib/handlers/MediaHandler";
 
 async function getInputFileAsZipHandler(apkg: string) {
   const filePath = path.join(__dirname, `./artifacts/${apkg}`);
@@ -90,3 +91,20 @@ test("get notes grouped by deck", async () => {
     throw new Error('No notes found for grouped test');
   }
 });
+
+test("get media files", async () => {
+  let zip = await getInputFileAsZipHandler("HTML TEST.apkg");
+  const mediaFile = await zip.getMediaFile();
+  const contents = (mediaFile?.contents)?.toString();
+  const media = new MediaHandler(contents!);
+
+  expect(media.getFiles()).toEqual(
+      {
+        "0": "6607631571149c09609b248b9e353752f84d1b74.png",
+        "1": "d56fb9f3d4cf60abbcf66603225d80a4fe6ab4aa.png",
+        "2": "ffdcdfdcdeaec827d7ab7ba0d82d6c5b0ccaca41.png",
+        "3": "9f81241e831db14361b054623138658a9d49d751.jpg",
+        "4": "d951457b1d3277a1ce3ffc3e52bf55901b8997d7.jpg"
+      }
+  )
+})

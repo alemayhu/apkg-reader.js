@@ -22,7 +22,7 @@ class ZipHandler {
 
     for (const name of this.fileNames) {
       let contents;
-      if (name.match(/.(md|html)$/)) {
+      if (name.match(/.(md|html)$/) || name === "media") {
         contents = await loadedZip.files[name].async("text");
       } else {
         contents = await loadedZip.files[name].async("uint8array");
@@ -32,6 +32,12 @@ class ZipHandler {
       }
       this.files.push({ name, contents });
     }
+  }
+
+  async getMediaFile() {
+    return this.files.find(f => {
+      return f.name === 'media';
+    });
   }
 
   getFileNames() {
