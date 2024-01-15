@@ -1,7 +1,6 @@
 import initSqlJs, { Database, SqlValue } from "sql.js";
 
 const ALL_NOTES_QUERY = "SELECT * FROM notes;";
-const ALL_DECKS_QUERY = "SELECT * FROM col;";
 const deckIdFromNoteId = (id: number) => {
   return `SELECT did FROM cards WHERE nid = ${id};`;
 };
@@ -16,6 +15,10 @@ interface Deck {
   id: number;
   name: string;
   notes?: Note[];
+}
+
+interface DatabaseOptions {
+  useZSTD: boolean;
 }
 
 export default class SQLHandler {
@@ -43,7 +46,15 @@ export default class SQLHandler {
     return _notes;
   }
 
-  decks(): Deck[] {
+  decks(options?: DatabaseOptions): Deck[] {
+    if (options?.useZSTD) {
+      return this.getLatestDecks();
+    }
+    return this.getModernOrOldDecks();
+  }
+
+  private getModernOrOldDecks() {
+    const ALL_DECKS_QUERY = "SELECT * FROM col;";
     const res = this.db!.exec(ALL_DECKS_QUERY)[0];
     const decksColumn = res.columns.findIndex((c) => c == "decks");
     const decks = [];
@@ -70,4 +81,13 @@ export default class SQLHandler {
   //     }
   //   }
   // }
+  private getLatestDecks() {
+    const ALL_DECKS_QUERY = "SELECT * FROM decks;";
+    const res = this.db!.exec(ALL_DECKS_QUERY)[0];
+    const decks : Deck[] = [];
+    for (const col of res.values) {
+      decks.push(<Deck>{id: col[0], name: col[1]});
+    }
+    return decks;
+  }
 }

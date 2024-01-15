@@ -3,6 +3,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "fzstd": "^0.1.0",
     "jszip": "^3.6.0",
     "sql.js": "^1.5.0",
     "typescript": "^4.3.4"

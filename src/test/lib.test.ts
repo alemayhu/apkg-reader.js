@@ -38,15 +38,27 @@ test("get deck name", async (t) => {
   let zip = await getInputFileAsZipHandler("HTML TEST.apkg");
   let db = await createDatabaseFrom(await zip);
   const expected = "Default";
-  const deck = db?.decks()[0];
-
-  expect(expected).toStrictEqual(deck?.name);
+  const decks = db?.decks();
+  if (decks) {
+    expect(expected).toStrictEqual(decks[0]?.name);
+    expect(decks[1].name).toEqual("&#x1F9E6; HTML test");
+  } else {
+    throw new Error("Did not load decks");
+  }
 });
 
 test('get non-default deck name', async () => {
   const zipHandler = await getInputFileAsZipHandler("Capitals.apkg");
   const database = await createDatabaseFrom(zipHandler);
-  expect(database?.decks()[0].name).toEqual('Default');
+  const decks = database?.decks({
+    useZSTD: true
+  });
+
+  if (decks) {
+    expect(decks[1]?.name).toEqual('Capitals');
+  } else {
+    throw new Error("Missing deck: Capitals")
+  }
 })
 
 
