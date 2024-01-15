@@ -1,12 +1,18 @@
 import path from "path";
 import fs from "fs";
 
-import {beforeAll, expect, test} from "vitest";
+import {expect, test} from "vitest";
 
-import SQLHandler from "../lib/handlers/SQLHandler";
 import {ZipHandler} from "../lib/handlers/ZipHandler";
-import {getInputFileAsZipHandler} from "./helpers/getInputFileAsZipHandler";
 import {readDatabaseFrom} from "../lib/readDatabaseFrom";
+
+async function getInputFileAsZipHandler(apkg: string) {
+  const filePath = path.join(__dirname, `./artifacts/${apkg}`);
+  const data = fs.readFileSync(filePath);
+  const zip = new ZipHandler();
+  await zip.extractFilesInPlace(data);
+  return zip;
+}
 
 
 test("detected files", async () => {
