@@ -6,7 +6,7 @@ import {beforeAll, expect, test} from "vitest";
 import SQLHandler from "../SQLHandler";
 import {ZipHandler} from "../ZipHandler";
 import {getInputFileAsZipHandler} from "./helpers/getInputFileAsZipHandler";
-import {createDatabaseFrom} from "./helpers/createDatabaseFrom";
+import {readDatabaseFrom} from "../lib/readDatabaseFrom";
 
 
 test("detected files", async () => {
@@ -29,14 +29,14 @@ test("detected files", async () => {
 
 test("reading sqlite files", async (t) => {
   let zip = await getInputFileAsZipHandler("HTML TEST.apkg");
-  let db = await createDatabaseFrom(await zip);
+  let db = await readDatabaseFrom(await zip);
   let notes = db?.notes()
   expect(15).toStrictEqual(db?.notes().length);
 });
 
 test("get deck name", async (t) => {
   let zip = await getInputFileAsZipHandler("HTML TEST.apkg");
-  let db = await createDatabaseFrom(await zip);
+  let db = await readDatabaseFrom(await zip);
   const expected = "Default";
   const decks = db?.decks();
   if (decks) {
@@ -49,7 +49,7 @@ test("get deck name", async (t) => {
 
 test('get non-default deck name', async () => {
   const zipHandler = await getInputFileAsZipHandler("Capitals.apkg");
-  const database = await createDatabaseFrom(zipHandler);
+  const database = await readDatabaseFrom(zipHandler);
   const decks = database?.decks({
     useZSTD: true
   });
@@ -69,7 +69,7 @@ test('get non-default deck name', async () => {
  */
 test("get notes grouped by deck", async () => {
   let zip = await getInputFileAsZipHandler("HTML TEST.apkg");
-  let db = await createDatabaseFrom(await zip);
+  let db = await readDatabaseFrom(await zip);
   const deck = db?.decks()[0]
   const notes = db?.notes();
   // const group = db.group([deck], notes);
