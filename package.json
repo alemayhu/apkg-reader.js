@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "build": "tsc"
   },
   "dependencies": {
     "fzstd": "^0.1.0",

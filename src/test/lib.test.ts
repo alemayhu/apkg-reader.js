@@ -37,7 +37,7 @@ test("detected files", async () => {
 
 test("reading sqlite files", async (t) => {
   let zip = await getInputFileAsZipHandler("HTML TEST.apkg");
-  let db = await readDatabaseFrom(await zip);
+  let db = await readDatabaseFrom(zip);
   let notes = db?.notes()
   expect(15).toStrictEqual(db?.notes().length);
 });
