@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/alemayhu/apkg-reader.js/compare/v1.0.1...v1.1.0) (2024-12-15)
+
+
+### Features
+
+* change package namespace ([7a32777](https://github.com/alemayhu/apkg-reader.js/commit/7a32777e86c8a984cc1890b379c7a3e17ce5b255))
+
 ## [1.0.1](https://github.com/alemayhu/apkg-reader.js/compare/v1.0.0...v1.0.1) (2024-12-15)
 
 
