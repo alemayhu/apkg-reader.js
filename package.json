@@ -19,7 +19,11 @@
   "name": "apkg-reader.js",
   "version": "1.0.0",
   "description": "a library for reading your APKG files in JavaScript",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "repository": "https://github.com/alemayhu/apkg-reader.js.git",
   "author": "Alexander Alemayhu <alexander@alemayhu.com>",
   "license": "MIT",
