@@ -16,7 +16,7 @@
     "vite": "^5.0.11",
     "vitest": "^1.1.3"
   },
-  "name": "apkg-reader.js",
+  "name": "@alemayhu/apkg-reader",
   "version": "1.0.1",
   "description": "a library for reading your APKG files in JavaScript",
   "main": "dist/index.js",
