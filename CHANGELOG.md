@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/alemayhu/apkg-reader.js/compare/v1.0.0...v1.0.1) (2024-12-15)
+
+
+### Bug Fixes
+
+* only publish dist files ([9acae03](https://github.com/alemayhu/apkg-reader.js/commit/9acae0318159973d8ae05f1cc704ae44ca894ed4))
+
 ## 1.0.0 (2024-12-15)
 
 
