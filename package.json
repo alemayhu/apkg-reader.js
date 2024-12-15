@@ -17,7 +17,7 @@
     "vitest": "^1.1.3"
   },
   "name": "apkg-reader.js",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "a library for reading your APKG files in JavaScript",
   "main": "index.js",
   "repository": "https://github.com/alemayhu/apkg-reader.js.git",
